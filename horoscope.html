@@ -1,0 +1,529 @@
+<%
+import math
+import random
+from bottle import request
+date = request.forms.get("date")
+dateSplit = date.split("-")
+year = int(dateSplit[0])
+month = int(dateSplit[1])
+day = int(dateSplit[2])
+
+zodiacWestImg = ""
+zodiacEastImg = ""
+randomFortune = random.randint(0,239)
+randomHoroscope = random.randint(0,20)
+
+zodiacWestDict = {
+    "Aries" : {
+        "startMonth" : "03",
+        "startDay" :    "21",
+        "endMonth" : "04",
+        "endDay" : "19",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/aries-ram-zodiac-sign-jacob-kuch.jpg"
+        },
+    "Taurus" : {
+        "startMonth" : "04",
+        "startDay" :    "20",
+        "endMonth" : "05",
+        "endDay" : "20",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/taurus-jacob-kuch.jpg"
+        },
+    "Gemini" : {
+        "startMonth" : "05",
+        "startDay" :    "21",
+        "endMonth" : "06",
+        "endDay" : "20",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/gemini-twins-horoscope-zodiac-sign-jacob-kuch.jpg"
+        },
+    "Cancer" : {
+        "startMonth" : "06",
+        "startDay" :    "21",
+        "endMonth" : "07",
+        "endDay" : "22",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/cancer-crab-zodiac-sign-jacob-kuch.jpg"
+        },
+    "Leo" : {
+        "startMonth" : "07",
+        "startDay" :    "23",
+        "endMonth" : "08",
+        "endDay" : "22",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/leo-lion-zodiac-jacob-kuch.jpg"
+        },
+    "Virgo" : {
+        "startMonth" : "08",
+        "startDay" :    "23",
+        "endMonth" : "09",
+        "endDay" : "22",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/zodiac-sign-virgo-maiden-jacob-kuch.jpg"
+        },
+    "Libra" : {
+        "startMonth" : "09",
+        "startDay" :    "23",
+        "endMonth" : "10",
+        "endDay" : "22",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/libra-scales-zodiac-sign-jacob-kuch.jpg"
+        },
+    "Scorpio" : {
+        "startMonth" : "10",
+        "startDay" :    "23",
+        "endMonth" : "11",
+        "endDay" : "21",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/scorpius-scorpion-zodiac-sign-jacob-kuch.jpg"
+        },
+    "Sagittarius" : {
+        "startMonth" : "11",
+        "startDay" :    "22",
+        "endMonth" : "12",
+        "endDay" : "21",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/sagittarius-the-centaur-archer-jacob-kuch.jpg"
+        },
+    "Capricorn" : {
+        "startMonth" : "12",
+        "startDay" :    "22",
+        "endMonth" : "01",
+        "endDay" : "19",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/capricorn-goat-horned-zodiac-sign-jacob-kuch.jpg"
+        },
+    "Aquarius" : {
+        "startMonth" : "01",
+        "startDay" :    "20",
+        "endMonth" : "02",
+        "endDay" : "18",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/aquarius-the-water-bearer-zodiac-sign-jacob-kuch.jpg"
+        },
+    "Pisces" : {
+        "startMonth" : "02",
+        "startDay" :    "19",
+        "endMonth" : "03",
+        "endDay" : "20",
+        "image" : "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/pisces-the-fish-zodiac-sign-jacob-kuch.jpg"
+        }
+}
+for x, y in zodiacWestDict.items():
+    if (int(y["startMonth"]) == month and int(y["startDay"]) <= day) or (int(y["endMonth"]) == month and int(y["endDay"]) >= day):
+        zodiacWest = x
+    end
+end
+
+zodiacWestImg= zodiacWestDict[zodiacWest]["image"]
+
+zodiacEastDict = {
+    "Monkey" : {
+        "modulo" : 0,
+        "image" : "https://4.bp.blogspot.com/-oYmg-FscujI/XES2g25bxMI/AAAAAAABvG8/ww6VBpB5tWInS7lIYoclu2uX2tSq1D25QCKgBGAs/s1600/09-The-Monkey-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Rooster" : {
+        "modulo" : 1,
+        "image" : "https://2.bp.blogspot.com/-NQJjpk2SFHs/XES2g6oc4wI/AAAAAAABvG8/a45lRBfi5lMj2K3yJ88-NtXgdPndH9mHQCKgBGAs/s1600/10-The-Rooster-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Dog" : {
+        "modulo" : 2,
+        "image" : "https://2.bp.blogspot.com/-miUx7H0DL5s/XES2g-GSadI/AAAAAAABvG8/pG7iO96vz_YxDcr0oDMKarW1BdCMkiW7ACKgBGAs/s1600/11-The-Dog-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Pig" : {
+        "modulo" : 3,
+        "image" : "https://4.bp.blogspot.com/-O0CMGXX8l9s/XES2g8zqVtI/AAAAAAABvG8/sqbE2EBqzBIFwuiq0o3MNmhLbIrqzdguACKgBGAs/s1600/12-The-Pig-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Rat" : {
+        "modulo" : 4,
+        "image" : "https://2.bp.blogspot.com/-bG6H5dpyzTc/XES2g7TaxeI/AAAAAAABvG8/x1Zgf2Ba8BUE1-SbyLqywNbfKYFP8ZR9QCKgBGAs/s1600/01-The-Rat-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Ox" : {
+        "modulo" : 5,
+        "image" : "https://3.bp.blogspot.com/-Q3wPkmjQb68/XES2gxi3kCI/AAAAAAABvG8/_Q3mZj7oDQQTwcC-TGKfV04HhiLL2FMRwCKgBGAs/s1600/02-The-Ox-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Tiger" : {
+        "modulo" : 6,
+        "image" : "https://2.bp.blogspot.com/-mcwX4urrjZw/XES2g4KXOvI/AAAAAAABvG8/6BFBa3ONXtY_4LPkXPpoTeDiVZDIshccwCKgBGAs/s1600/03-The-Tiger-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Rabbit" : {
+        "modulo" : 7,
+        "image" : "https://1.bp.blogspot.com/-r3Rx472VTM4/XES2g6UMySI/AAAAAAABvG8/uGNscWQG37M9PC-EpNsqq5ducXEZviPHgCKgBGAs/s1600/04-The-Rabbit-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Dragon" : {
+        "modulo" : 8,
+        "image" : "https://2.bp.blogspot.com/-VEp7X_xieAs/XES2g2TESoI/AAAAAAABvG8/oxmiFCgVK5s9uTZkinVOi9HENf6cB1QggCKgBGAs/s1600/05-The-Dragon-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Snake" : {
+        "modulo" : 9,
+        "image" : "https://1.bp.blogspot.com/-z2vlsNK_hoo/XES2g5ID4HI/AAAAAAABvG8/AG7Nuj31pXgNkfuKKbRjYHJrlR7E9TjCQCKgBGAs/s1600/06-The-Snake-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Horse" : {
+        "modulo" : 10,
+        "image" : "https://2.bp.blogspot.com/-DAvkBAnqhgM/XES2g6iaEUI/AAAAAAABvG8/dgfxUjhhfToWi13R1RK-LoFsDmwx9h1vgCKgBGAs/s1600/07-The-Horse-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        },
+    "Goat" : {
+        "modulo" : 11,
+        "image" : "https://4.bp.blogspot.com/-kFjtRa_89hQ/XES2g5C5apI/AAAAAAABvG8/bXBKzUUze3c0MWaFQ2npwQLcyh2UVntfQCKgBGAs/s1600/08-The-Ram-jongkie-Year-of-the-Pig-Chinese-New-Year-Zodiac-Drawings.jpg"
+        }
+}
+
+for x, y in zodiacEastDict.items():
+    if y["modulo"] == (year % 12):
+        zodiacEast = x
+    end
+end
+
+zodiacEastImg= zodiacEastDict[zodiacEast]["image"]
+
+fortuneCookies = [
+    "A beautiful, smart, and loving person will be coming into your life.",
+    "A dubious friend may be an enemy in camouflage.",
+    "A faithful friend is a strong defense.",
+    "A feather in the hand is better than a bird in the air. ",
+    "A fresh start will put you on your way.",
+    "A friend asks only for your time not your money.",
+    "A friend is a present you give yourself.",
+    "A gambler not only will lose what he has, but also will lose what he doesn’t have.",
+    "A golden egg of opportunity falls into your lap this month.",
+    "A good friendship is often more important than a passionate romance.",
+    "A good time to finish up old tasks.",
+    "A hunch is creativity trying to tell you something.",
+    "A lifetime friend shall soon be made.",
+    "A lifetime of happiness lies ahead of you.",
+    "A light heart carries you through all the hard times.",
+    "A new perspective will come with the new year. ",
+    "A person is never to (sic) old to learn.",
+    "A person of words and not deeds is like a garden full of weeds.",
+    "A pleasant surprise is waiting for you.",
+    "A short pencil is usually better than a long memory any day.",
+    "A small donation is call for. It’s the right thing to do.",
+    "A smile is your personal welcome mat.",
+    "A smooth long journey! Great expectations.",
+    "A soft voice may be awfully persuasive.",
+    "A truly rich life contains love and art in abundance.",
+    "Accept something that you cannot change, and you will feel better.",
+    "Adventure can be real happiness.",
+    "Advice is like kissing. It costs nothing and is a pleasant thing to do. ",
+    "Advice, when most needed, is least heeded.",
+    "All the effort you are making will ultimately pay off.",
+    "All the troubles you have will pass away very quickly.",
+    "All will go well with your new project.",
+    "All your hard work will soon pay off.",
+    "Allow compassion to guide your decisions.",
+    "An acquaintance of the past will affect you in the near future.",
+    "An agreeable romance might begin to take on the appearance of love.",
+    "An important person will offer you support.",
+    "An inch of time is an inch of gold.",
+    "Any decision you have to make tomorrow is a good decision.",
+    "At the touch of love, everyone becomes a poet.",
+    "Be careful or you could fall for some tricks today.",
+    "Beauty in its various forms appeals to you.",
+    "Because you demand more from yourself, others respect you deeply.",
+    "Believe in yourself and others will too.",
+    "Believe it can be done.",
+    "Better ask twice than lose yourself once.",
+    "Bide your time, for success is near.",
+    "Carve your name on your heart and not on marble.",
+    "Change is happening in your life, so go with the flow!",
+    "Competence like yours is underrated.",
+    "Congratulations! You are on your way.",
+    "Could I get some directions to your heart? ",
+    "Courtesy begins in the home.",
+    "Courtesy is contagious.",
+    "Curiosity kills boredom. Nothing can kill curiosity.",
+    "Dedicate yourself with a calm mind to the task at hand.",
+    "Depart not from the path which fate has you assigned.",
+    "Determination is what you need now.",
+    "Diligence and modesty can raise your social status.",
+    "Disbelief destroys the magic.",
+    "Distance yourself from the vain.",
+    "Do not be intimidated by the eloquence of others.",
+    "Do not demand for someone’s soul if you already got his heart.",
+    "Do not let ambitions overshadow small success.",
+    "Do not make extra work for yourself.",
+    "Do not underestimate yourself. Human beings have unlimited potentials.",
+    "Do you know that the busiest person has the largest amount of time?",
+    "Don’t be discouraged, because every wrong attempt discarded is another step forward.",
+    "Don’t confuse recklessness with confidence. ",
+    "Don’t just spend time. Invest it.",
+    "Don’t just think, act!",
+    "Don’t let friends impose on you, work calmly and silently.",
+    "Don’t let the past and useless detail choke your existence.",
+    "Don’t let your limitations overshadow your talents.",
+    "Don’t worry; prosperity will knock on your door soon.",
+    "Each day, compel yourself to do something you would rather not do.",
+    "Education is the ability to meet life’s situations.",
+    "Embrace this love relationship you have!",
+    "Emulate what you admire in your parents.",
+    "Emulate what you respect in your friends.",
+    "Every flower blooms in its own sweet time.",
+    "Every wise man started out by asking many questions.",
+    "Everyday in your life is a special occasion.",
+    "Everywhere you choose to go, friendly faces will greet you.",
+    "Failure is the chance to do better next time.",
+    "Failure is the path of lease persistence.",
+    "Fear and desire – two sides of the same coin.",
+    "Fearless courage is the foundation of victory.",
+    "Feeding a cow with roses does not get extra appreciation.",
+    "First think of what you want to do; then do what you have to do.",
+    "For hate is never conquered by hate. Hate is conquered by love.",
+    "For the things we have to learn before we can do them, we learn by doing them.",
+    "Fortune Not Found: Abort, Retry, Ignore?",
+    "From listening comes wisdom and from speaking repentance.",
+    "From now on your kindness will lead you to success.",
+    "Get your mind set – confidence will lead you on.",
+    "Get your mind set…confidence will lead you on.",
+    "Go for the gold today! You’ll be the champion of whatever.",
+    "Go take a rest; you deserve it.",
+    "Good news will be brought to you by mail.",
+    "Good news will come to you by mail.",
+    "Good to begin well, better to end well.",
+    "Happiness begins with facing life with a smile and a wink.",
+    "Happiness will bring you good luck.",
+    "Happy life is just in front of you.",
+    "Hard words break no bones, fine words butter no parsnips.",
+    "Have a beautiful day.",
+    "He who expects no gratitude shall never be disappointed. ",
+    "He who knows he has enough is rich.",
+    "Help! I’m being held prisoner in a chinese bakery!",
+    "How many of you believe in psycho-kinesis? Raise my hand.",
+    "How you look depends on where you go.",
+    "I learn by going where I have to go.",
+    "If a true sense of value is to be yours it must come through service.",
+    "If certainty were truth, we would never be wrong.",
+    "If you continually give, you will continually have.",
+    "If you look in the right places, you can find some good offerings.",
+    "If you think you can do a thing or think you can’t do a thing, you’re right.",
+    "If you wish to see the best in others, show the best of yourself.",
+    "If your desires are not extravagant, they will be granted.",
+    "If your desires are not to extravagant they will be granted. ",
+    "If you’re feeling down, try throwing yourself into your work.",
+    "Imagination rules the world.",
+    "In order to take, one must first give.",
+    "In the end all things will be known.",
+    "In this world of contradiction, It’s better to be merry than wise.",
+    "It could be better, but it’a good enough.",
+    "It is better to be an optimist and proven a fool than to be a pessimist and be proven right.",
+    "It is better to deal with problems before they arise.",
+    "It is honorable to stand up for what is right, however unpopular it seems.",
+    "It is worth reviewing some old lessons.",
+    "It takes courage to admit fault.",
+    "It’s not the amount of time you devote, but what you devote to the time that counts.",
+    "It’s time to get moving. Your spirits will lift accordingly.",
+    "Keep your face to the sunshine and you will never see shadows.",
+    "Let the world be filled with tranquility and goodwill.",
+    "Like the river flows into the sea. Some things are just meant to be.",
+    "Listen not to vain words of empty tongue.",
+    "Listen to everyone. Ideas come from everywhere.",
+    "Living with a commitment to excellence shall take you far.",
+    "Long life is in store for you.",
+    "Love is a warm fire to keep the soul warm.",
+    "Love is like sweet medicine, good to the last drop.",
+    "Love lights up the world.",
+    "Love truth, but pardon error.",
+    "Man is born to live and not prepared to live.",
+    "Man’s mind, once stretched by a new idea, never regains it’s original dimensions.",
+    "Many will travel to hear you speak.",
+    "Meditation with an old enemy is advised.",
+    "Miles are covered one step at a time.",
+    "Nature, time and patience are the three great physicians.",
+    "Never fear! The end of something marks the start of something new.",
+    "New ideas could be profitable.",
+    "New people will bring you new realizations, especially about big issues. ",
+    "No one can walk backwards into the future.",
+    "Nothing is more difficult, and therefore more precious, than to be able to decide.",
+    "Now is a good time to buy stock.",
+    "Now is the time to go ahead and pursue that love interest!",
+    "Now is the time to try something new",
+    "Now is the time to try something new.",
+    "Observe all men, but most of all yourself.",
+    "One can never fill another’s shoes, rather he must outgrow the old shoes.",
+    "One of the first things you should look for in a problem is its positive side.",
+    "Others can help you now.",
+    "Pennies from heaven find their way to your doorstep this year!",
+    "People are attracted by your Delicate features.",
+    "People find it difficult to resist your persuasive manner.",
+    "Perhaps you’ve been focusing too much on saving.",
+    "Physical activity will dramatically improve your outlook today.",
+    "Pick battles big enough to matter, small enough to win.",
+    "Place special emphasis on old friendship..",
+    "Practice makes perfect.",
+    "Protective measures will prevent costly disasters.",
+    "Put your mind into planning today. Look into the future.",
+    "Remember the birthday but never the age.",
+    "Remember to share good fortune as well as bad with your friends.",
+    "Rest has a peaceful effect on your physical and emotional health.",
+    "Resting well is as important as working hard.",
+    "Romance moves you in a new direction.",
+    "Savor your freedom – it is precious.",
+    "Say hello to others. You will have a happier day.",
+    "Self-knowledge is a life long process.",
+    "Share your joys and sorrows with your family.",
+    "Sift through your past to get a better idea of the present.",
+    "Sloth makes all things difficult; industry all easy.",
+    "Small confidences mark the onset of a friendship.",
+    "Society prepares the crime; the criminal commits it.",
+    "Someone you care about seeks reconciliation.",
+    "Soon life will become more interesting.",
+    "Stand tall. Don’t look down upon yourself.",
+    "Staying close to home is going to be best for your morale today",
+    "Stop searching forever, happiness is just next to you.",
+    "Strong reasons make strong actions.",
+    "Success is a journey, not a destination.",
+    "Success is failure turned inside out.",
+    "Success is going from failure to failure without loss of enthusiasm.",
+    "Swimming is easy. Stay floating is hard.",
+    "Take care and sensitivity you show towards others will return to you.",
+    "Take the high road.",
+    "Technology is the art of arranging the world so we do not notice it.",
+    "The austerity you see around you covers the richness of life like a veil.",
+    "The best prediction of future is the past.",
+    "The change you started already have far-reaching effects. Be ready.",
+    "The change you started already have far-reaching effects. Be ready.",
+    "The first man gets the oyster, the second man gets the shell.",
+    "The greatest achievement in life is to stand up again after falling.",
+    "The harder you work, the luckier you get.",
+    "The night life is for you.",
+    "The one that recognizes the illusion does not act as if it is real.",
+    "The only people who never fail are those who never try.",
+    "The person who will not stand for something will fall for anything.",
+    "The philosophy of one century is the common sense of the next.",
+    "The saints are the sinners who keep on trying.",
+    "The secret to good friends is no secret to you.",
+    "The small courtesies sweeten life, the greater ennoble it.",
+    "The smart thing to do is to begin trusting your intuitions.",
+    "The strong person understands how to withstand substantial loss.",
+    "The sure way to predict the future is to invent it.",
+    "The truly generous share, even with the undeserving.",
+    "The value lies not within any particular thing, but in the desire placed on that thing.",
+    "The weather is wonderful.",
+    "There is no mistake so great as that of being always right.",
+    "There is no wisdom greater than kindness.",
+    "There is not greater pleasure than seeing your lived ones prosper.",
+    "There’s no such thing as an ordinary cat.",
+    "Things don’t just happen; they happen just.",
+    "Those who care will make the effort.",
+    "Time and patience are called for many surprises await you!",
+    "Time is precious, but truth is more precious than time",
+    "To know oneself, one should assert oneself.",
+    "To the world you may be one person, but to one person you may be the world.",
+    "Today is the conserve yourself, as things just won’t budge.",
+    "Today, your mouth might be moving but no one is listening.",
+    "Tonight you will be blinded by passion.",
+    "Use your eloquence where it will do the most good.",
+    "We first make our habits, and then our habits make us.",
+    "Welcome change.",
+    "“Welcome” is a powerful word.",
+    "Well done is better than well said."
+]
+
+fortune = fortuneCookies[randomFortune]
+
+horoscopeReadings = [
+    "Your task today is to appreciate everything. This doesn't mean that you should write a thank-you note for everyone who smiles at you today, but it does mean that you should take an extra second every once in a while to remind yourself that you have it so much better than so many other people. Sure, things aren't perfect—and sometimes the people you love can drive you a bit crazy. But you wouldn't trade it for anything—this is a day to contemplate that.",
+    "Positive possibilities are all around you right now, making today a very good time to initiate any major projects you've been pondering. This could include business deals or personal undertakings. If all of the key elements are in place, you should feel free to put your signature on the dotted line with confidence. Formal relationships and contractual agreements that you enter into today are poised to really pay off.",
+    "Turn all your attention toward resolving unfinished business today. Is there a project you left half finished, a person who is waiting to hear from you or an errand you need to run? Get on it as soon as you can this morning. Minor plans could turn into major headaches if you're not too careful. Don't be shy—make as many phone calls as it takes to reconnect with the people you need to speak with. You'll be grateful you went through all the effort.",
+    "Your enthusiasm will get you noticed in a positive way, but don't overdo it, or else you might start getting a very bad type of attention. There's a fine line between being entertaining and being obnoxious, and you need to understand the difference. If you feel like gushing or venting about something, save it for your inner circle. These folks know you well and embrace your more extreme emotions. Letting down your guard is safe with them.",
+    "You're cruising nicely along the river of life right now, so why not just relax, dip your toes into the water and enjoy the ride for a while? Things are going well in just about every area of your life, from your growing sense of accomplishment at work or school to your personal pride in how well you've been taking care of yourself (good for you!). Other people are eager to join in the relaxation with you, so plan an impromptu social event tonight.",
+    "When you're this close to reaching a goal, it can be quite tempting to cut a few corners or be a little bit conniving in order to reach that goal faster. But this is not a wise idea—the stars say that you need to continue on this path at the steady pace you've established. Let things unfold as they need to, not as you might want them to! Things have gone very well so far—so just have faith and try to be more patient.",
+    "Someone in your circle—either at work or in your social group—is going through some changes that could easily be considered inspirational. Give credit where credit is due, and make sure you communicate how impressed you are. It can be hard to praise someone (especially someone who might not be your favorite person), but acknowledging truth can be an empowering act. Think of the greater benefit to yourself, and pat someone else on the back.",
+    "You may feel an urgent desire to embark on a few new projects today—and today is a good day for that! But make sure that you proceed carefully. Research and planning might not seem like a lot of fun, but they are necessary—you need to fully understand what you'll encounter on the road ahead. Rushing heedlessly toward something new might be very exciting, but it's not much fun to hit a dead end, now is it?",
+    "Are you finding yourself running out of time? Today someone will call to cancel a meeting unexpectedly—this may disappoint you in one way, but in another way, it will be quite a blessing. You should appreciate the big hole that this will put in your schedule, and don't be in a hurry to fill it with anything. See how the day unfolds, and stay spontaneous to keep yourself interested and stimulated. Dates and times are not written in stone.",
+    "Let your bold personality shine today. You will be totally fiery and full of energy, so put that to good use by pushing the envelope, saying things that everyone is thinking but no one has the courage to say and exploring all the boundaries of your world. Today is a great day to try something that you have always been just a little too scared to try. Your fears are vanishing. If you want something today, ask for it. (If you don't, you may never get it!)",
+    "The time is right for a successful trip—if you are planning any travel, today is the day to push these plans forward and make them happen. Making all the arrangements could take more time than you thought, but there are some amazing bargains and upgrade opportunities just ripe for the picking. All you have to do is look in some unusual places, and you will find them. Get your traveling companion to help you out—after all, the more help, the better!",
+    "A person who recently made a big splash in your life is starting to act a bit unusual—keep your distance for the next few days, or at least until you get a better idea of who this person really is. The first impression he or she made may have been orchestrated very carefully. It's going to take a little bit more time for you to figure out what the truth behind the facade is. Don't rush yourself.",
+    "Trust your senses today, even if they tell you something that the facts don't support—yet. It is only a matter of time before you are proved to have been right all along, so just bide your time and bite your tongue. Of course, someone as gracious and as mature as you won't gloat when your victory comes, but there is no reason you can't make sure people recognize the fact that you know what you're doing. Expect people to want you to be on their team from now on.",
+    "The people around you are going to be full of energy today—and just this once, you might be lagging a bit behind the crowd. To catch up, grab onto someone's coattails (with her or his permission, of course) and pull yourself along until you can muster up the energy to maintain your momentum on your own. Everyone is in this together, and they want you with them—so no one is going to mind if you need help catching up right now.",
+    "There is no reason for you to take anything too seriously right now, so lighten up! Every argument has two sides, and you should accept the fact that everyone has his or her own perspective on things. There isn't always only one right answer. If you take another look at complicated situations right now, you will be able to separate the good parts from the bad easily and adjust your opinion to take more people into account.",
+    "Your unconscious mind is making choices you might not be aware of. Today, it's time to take a larger view of your life and your recent actions. Things might be in danger of getting a bit out of control. If you've been spending a lot of money, it's time to start sticking to a budget and cutting out one or two indulgences. Discipline is good for you right now—it will prepare you for something big that's coming soon. You won't regret delaying gratification.",
+    "Today you may be tempted to jump into a chaotic situation that looks like a lot of fun -- but it might actually end up being quite unpleasant. There is definitely something you don't know yet. Let the drama unfold a bit more before you get involved; otherwise, you could get caught up in something you don't fully understand. Have a little patience, and proceed only when everything looks good to go.",
+    "If you've been dying to experience something new in your life, you will get a grand opportunity to do so today. Someone you don't know very well will propose a crazy idea—so crazy that it just might work! Are you in or out? Gather all your courage and dive on in! You need to start taking more chances, don't you think? Risk is the only way to give yourself the excitement you're craving. You don't need another quiet, safe evening at home right now.",
+    "You clean your kitchen when it gets messy, you clean your car when the back seat gets cluttered, and you should clean your mind when it gets full of negative things. This isn't a question of ignoring real problems you may be mulling over, it's a question of letting go of worry. There are things you just can't do anything about—those are the things you have to stop thinking about today. Move on with positive thoughts, and leave the old ones behind.",
+    "There is strength in numbers, as you will find out today. You may not usually be a 'joiner,' but if you become part of a crowd today, you won't be sorry. Positive things will start happening faster than you could have hoped for. Don't worry—this is not a case of becoming a sheep just for the sake of fitting in. You won't lose your identity just by being part of a group of people, especially if those people share your goals and ideals."
+]
+
+horoscope = horoscopeReadings[randomHoroscope]
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+  <title>Horoscope Results</title>
+  <meta charset = "utf-8">
+   <style type = "text/css">
+      * {
+            margin: 0;
+            padding: 0;
+      }
+      body {
+          background-color: gold;
+      }
+      h1 {
+        text-align: center;
+        color: black;
+        margin-bottom: 50px;
+      }
+      h2 {
+        margin-top: 25px;
+        text-align: center;
+        color: white;
+      }
+      h3 {
+        text-align: center;
+        color: gold;
+      }
+      .grid-container {
+          margin-top: 25px;
+          display: grid;
+          grid-template-columns: auto auto auto;
+          background-color: red;
+      }
+      .grid-item {
+            text-align: center;
+        }
+      img {
+        width: 300px;
+        height: 500px;
+        margin: auto;
+        margin-bottom: 25px;
+      }
+      p{
+          margin-top: 50px;
+          height: 400px;
+          background-color: rgb(255, 215, 0, .5);
+      }
+      #fortune {
+          margin-top: 25px;
+      }
+
+
+    </style>
+
+</head>
+<body>
+  <h1>Your Zodiac Results</h1>
+    <div class="grid-container">
+        <div class="grid-item">
+            <h2>Western</h2> <br/ >
+            <h3>{{ zodiacWest }}</h3> <br/ >
+            <img src={{ zodiacWestImg }} alt="{{ zodiacWest }} Zodiac Image">
+
+        </div>
+
+        <div class="grid-item" id="fortune">
+            <h2></h2> <br/ >
+            <h3>Horoscope / Fortune</h3> <br/ >
+            <p>
+                Horoscope: <br/ >
+                <br/ >
+                {{ horoscope }} <br/ >
+                <br/ >
+                <br/ >
+                Fortune: <br/ >
+                <br/ >
+                {{ fortune }}
+            </p>
+
+        </div>
+
+        <div class="grid-item">
+            <h2>Eastern</h2> <br/ >
+            <h3>{{ zodiacEast }}</h3> <br/ >
+            <img src={{ zodiacEastImg }} alt="{{ zodiacEast }} Zodiac Image">
+        </div>
+
+    </div>
+
+</body>
+</html>

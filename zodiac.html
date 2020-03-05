@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang = "en-us">
+<head>
+  <meta charset = "utf-8">
+  <title>Zodiac Form</title>
+   <style type = "text/css">
+      * {
+            margin: 0;
+            padding: 0;
+      }
+      body {
+          background-color: red;
+      }
+      h1 {
+        margin-top: 75px;
+        text-align: center;
+
+        color: gold;
+      }
+      div {
+        margin: auto;
+        margin-top: 75px;
+        width: 80%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+
+      }
+      img {
+        max-width: 750px;
+        max-height: 500px;
+        margin: auto;
+      }
+      form {
+        width: 80%;
+        height: 75px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        margin: auto;
+      }
+
+      label {
+        grid-column: 1/1;
+        padding-top: 12.5px;
+        text-align: center;
+        background-color: red;
+        color: white;
+        font-size: 150%;
+        border-top: 5px solid gold;
+        border-left: 5px solid gold;
+      }
+
+      input {
+        grid-column: 2/2;
+        padding-left: 1em;
+        border-top: 5px solid gold;
+        border-right: 5px solid gold;
+      }
+
+      button {
+        grid-column: 3/3;
+        background-color: lightgray;
+      }
+
+    </style>
+</head>
+
+<body>
+<h1>Welcome to Zodiac Calculator</h1>
+<div>
+<img src="https://i.pinimg.com/originals/a8/70/55/a87055686d2c4e3c1b824e7203d93074.jpg" alt="zodiacWest">
+
+<form action = "/horoscope"
+      method = "post">
+    <label>Birthdate:</label>
+    <input type = "date"
+           name = "date" />
+        <button type = "submit">
+          submit
+        </button>
+</form>
+
+<img src="https://pre00.deviantart.net/da8a/th/pre/i/2017/004/a/a/chinese_zodiac__wood_horse_by_nicejuanpaolo-d742v9n.jpg" alt="zodiacEast">
+</div>
+</body>
+</html>
+
